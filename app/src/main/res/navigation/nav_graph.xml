@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.example.maktabhw16_1.LoginFragment"
+            android:label="LoginFragment"
+            tools:layout="@layout/fragment_login">
+            <action
+                android:id="@+id/action_loginFragment_to_registerFragment"
+                app:destination="@id/registerFragment" />
+            <action
+                android:id="@+id/action_loginFragment_to_mainTaskFragment"
+                app:destination="@id/mainTaskFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/registerFragment"
+            android:name="com.example.maktabhw16_1.RegisterFragment"
+            android:label="RegisterFragment"
+            tools:layout="@layout/fragment_register" />
+
+
+
+        <fragment
+            android:id="@+id/mainTaskFragment"
+            android:name="com.example.maktabhw16_1.MainTaskFragment"
+            android:label="MainTaskFragment"
+            tools:layout="@layout/fragment_main_task" >
+            <argument
+                android:name="task"
+                app:argType="com.example.maktabhw16_1.Task" />
+            <action
+                android:id="@+id/action_mainTaskFragment_to_taskDialog2"
+                app:destination="@id/taskDialog" />
+        </fragment>
+        <fragment
+            android:id="@+id/doingFragment"
+            android:name="com.example.maktabhw16_1.DoingFragment"
+            android:label="DoingFragment"
+            tools:layout="@layout/fragment_doing" >
+            <argument
+                android:name="task"
+                app:argType="com.example.maktabhw16_1.Task" />
+            <action
+                android:id="@+id/action_doingFragment_to_taskDialog"
+                app:destination="@id/taskDialog" />
+        </fragment>
+        <fragment
+            android:id="@+id/todoFragment"
+            android:name="com.example.maktabhw16_1.TodoFragment"
+            android:label="TodoFragment"
+            tools:layout="@layout/fragment_todo" >
+            <argument
+                android:name="task"
+                app:argType="com.example.maktabhw16_1.Task"
+                app:nullable="true" />
+            <action
+                android:id="@+id/action_todoFragment_to_taskDialog"
+                app:destination="@id/taskDialog" />
+        </fragment>
+        <fragment
+            android:id="@+id/doneFragment"
+            android:name="com.example.maktabhw16_1.DoneFragment"
+            android:label="DoneFragment"
+            tools:layout="@layout/fragment_done" >
+            <argument
+                android:name="task"
+                app:argType="com.example.maktabhw16_1.Task" />
+            <action
+                android:id="@+id/action_doneFragment_to_taskDialog"
+                app:destination="@id/taskDialog" />
+        </fragment>
+    <dialog
+        android:id="@+id/taskDialog"
+        android:name="com.example.maktabhw16_1.TaskDialog"
+        android:label="TaskDialog"
+        tools:layout="@layout/layout_dialog"/>
+</navigation>

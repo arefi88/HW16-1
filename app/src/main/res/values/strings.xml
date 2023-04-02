@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MaktabHW16-1</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">email</string>
+    <string name="registerbtn">Register</string>
+    <string name="title">title</string>
+    <string name="description">description</string>
+    <string name="time">time</string>
+    <string name="date">Date</string>
+    <string name="done">Done</string>
+</resources>

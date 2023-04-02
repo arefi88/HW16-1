@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_task"
+    app:startDestination="@id/mainTaskFragment2">
+
+    <fragment
+        android:id="@+id/mainTaskFragment2"
+        android:name="com.example.maktabhw16_1.MainTaskFragment"
+        android:label="MainTaskFragment" />
+    <fragment
+        android:id="@+id/doingFragment2"
+        android:name="com.example.maktabhw16_1.DoingFragment"
+        android:label="DoingFragment" />
+    <fragment
+        android:id="@+id/doneFragment2"
+        android:name="com.example.maktabhw16_1.DoneFragment"
+        android:label="DoneFragment" />
+    <fragment
+        android:id="@+id/todoFragment2"
+        android:name="com.example.maktabhw16_1.TodoFragment"
+        android:label="TodoFragment" />
+</navigation>
