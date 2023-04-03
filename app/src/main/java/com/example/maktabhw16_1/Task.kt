@@ -4,6 +4,10 @@ import android.os.Parcelable
 
 
 data class Task(
-    val title:String?=null,
-    val description:String?=null,
+
+    val title:String,
+    val description:String,
+    val date:String,
+    val time:String,
+
 ):java.io.Serializable

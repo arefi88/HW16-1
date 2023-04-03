@@ -66,9 +66,6 @@ class MainTaskFragment : Fragment() {
             }
         })
 
-        
-
-
     }
 
     override fun onDestroyView() {

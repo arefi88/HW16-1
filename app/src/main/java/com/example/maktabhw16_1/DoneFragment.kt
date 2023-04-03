@@ -11,27 +11,35 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.maktabhw16_1.databinding.FragmentDoneBinding
 
 class DoneFragment : Fragment() {
-    private var _binding:FragmentDoneBinding?=null
+    private var _binding: FragmentDoneBinding? = null
     private val binding get() = _binding!!
-    private val args:DoneFragmentArgs by navArgs()
-    private val doneViewModel:DoneViewModel by activityViewModels()
+    private val doneViewModel: DoneViewModel by activityViewModels()
+    private lateinit var taskAdapter: TaskAdapter
+    private val doneList = mutableListOf<Task>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding=FragmentDoneBinding.inflate(inflater,container,false)
+    ): View {
+        _binding = FragmentDoneBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var task:Task
         super.onViewCreated(view, savedInstanceState)
-        doneViewModel.taskLiveData.observe(viewLifecycleOwner){task->
-            binding.textView.text=task.title.toString()
+        taskAdapter = TaskAdapter()
+        doneViewModel.taskLiveData.observe(viewLifecycleOwner) { task ->
+            doneList.add(task)
+            taskAdapter.differ.submitList(doneList.toList())
+        }
+
+        binding.rvDone.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = taskAdapter
         }
 
 
@@ -39,6 +47,6 @@ class DoneFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding=null
+        _binding = null
     }
 }

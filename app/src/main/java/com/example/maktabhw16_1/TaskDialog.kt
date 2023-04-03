@@ -9,18 +9,24 @@ import android.content.Context
 import android.content.DialogInterface
 import android.icu.text.CaseMap.Title
 import android.os.Bundle
+import android.text.format.DateFormat.is24HourFormat
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TimePicker
+import android.widget.Toast
 
 
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 
 
 class TaskDialog : DialogFragment() {
@@ -30,13 +36,38 @@ class TaskDialog : DialogFragment() {
     private lateinit var btnTime:Button
     private lateinit var cbDone:CheckBox
     private lateinit var listener:TaskDialogListener
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val builder = AlertDialog.Builder(activity)
         val inflater = activity?.layoutInflater
         val view= inflater?.inflate(R.layout.layout_dialog,null)
+
         if (view != null) {
             initView(view)
+
+        }
+        btnDate.setOnClickListener {
+            val datePickerFragment = DatePickerFragment()
+            val supportFragmentManager =activity?.supportFragmentManager
+            supportFragmentManager?.setFragmentResultListener(
+                "REQUEST_KEY",
+               requireActivity()
+            ){resultkey,bundle->
+                if (resultkey=="REQUEST_KEY"){
+                    val date=bundle.getString("SELECTED_DATE")
+                    btnDate.text=date
+                }
+
+            }
+            if (supportFragmentManager != null) {
+                datePickerFragment.show(supportFragmentManager,"")
+            }
+
+        }
+
+        btnTime.setOnClickListener {
+            openTimePicker()
         }
         builder.setView(view)
             .setTitle("")
@@ -45,28 +76,39 @@ class TaskDialog : DialogFragment() {
                    dismiss()
                 }
 
-
             })
             .setPositiveButton("Save",object :DialogInterface.OnClickListener{
                 override fun onClick(p0: DialogInterface?, p1: Int) {
                     val title=edtTitle.text.toString()
                     val description=edtDescription.text.toString()
-                    val task=Task(title,description)
-                   // findNavController().previousBackStackEntry?.savedStateHandle?.set("task",task)
+                    val date=btnDate.text.toString()
+                    val time=btnTime.text.toString()
+                    val task=Task(title,description,date,time)
                     findNavController().previousBackStackEntry?.savedStateHandle?.set("task",task)
-                    //listener.applyTask(title,description)
                 }
 
 
             })
+
         return builder.create()
-    }
-
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
 
     }
+
+   private fun openTimePicker(){
+       val isSystem24Hour=is24HourFormat(requireActivity())
+       val clockFormat=if (isSystem24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+       val picker = MaterialTimePicker.Builder()
+           .setTimeFormat(clockFormat)
+           .setHour(12)
+           .setMinute(0).build()
+       picker.show(childFragmentManager,"")
+       picker.addOnPositiveButtonClickListener{
+           btnTime.text="${picker.hour}:${picker.minute}"
+       }
+   }
+
+
+
     interface TaskDialogListener{
         fun applyTask(title: String,description:String)
     }
