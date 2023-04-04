@@ -15,13 +15,21 @@
                 app:destination="@id/registerFragment" />
             <action
                 android:id="@+id/action_loginFragment_to_mainTaskFragment"
-                app:destination="@id/mainTaskFragment" />
+                app:destination="@id/mainTaskFragment"
+                app:popUpTo="@id/loginFragment"
+                app:popUpToInclusive="true"/>
         </fragment>
         <fragment
             android:id="@+id/registerFragment"
             android:name="com.example.maktabhw16_1.RegisterFragment"
             android:label="RegisterFragment"
-            tools:layout="@layout/fragment_register" />
+            tools:layout="@layout/fragment_register" >
+            <action
+                android:id="@+id/action_registerFragment_to_mainTaskFragment"
+                app:destination="@id/mainTaskFragment"
+                app:popUpTo="@id/loginFragment"
+                app:popUpToInclusive="true"/>
+        </fragment>
 
 
 
@@ -36,6 +44,9 @@
             <action
                 android:id="@+id/action_mainTaskFragment_to_taskDialog2"
                 app:destination="@id/taskDialog" />
+            <action
+                android:id="@+id/action_mainTaskFragment_to_todoTaskDialog"
+                app:destination="@id/todoTaskDialog" />
         </fragment>
         <fragment
             android:id="@+id/doingFragment"
@@ -61,6 +72,9 @@
             <action
                 android:id="@+id/action_todoFragment_to_taskDialog"
                 app:destination="@id/taskDialog" />
+            <action
+                android:id="@+id/action_todoFragment_to_todoTaskDialog"
+                app:destination="@id/todoTaskDialog" />
         </fragment>
         <fragment
             android:id="@+id/doneFragment"
@@ -78,5 +92,10 @@
         android:id="@+id/taskDialog"
         android:name="com.example.maktabhw16_1.TaskDialog"
         android:label="TaskDialog"
+        tools:layout="@layout/layout_dialog"/>
+    <dialog
+        android:id="@+id/todoTaskDialog"
+        android:name="com.example.maktabhw16_1.TodoTaskDialog"
+        android:label="TodoTaskDialog"
         tools:layout="@layout/layout_dialog"/>
 </navigation>

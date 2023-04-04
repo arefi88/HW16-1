@@ -7,13 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.maktabhw16_1.databinding.ItemRowBinding
 
-class TaskAdapter :RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
+class TaskAdapter(private val onItemClicked:(Task)->Unit) :RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
     private lateinit var binding:ItemRowBinding
     inner class ViewHolder:RecyclerView.ViewHolder(binding.root){
         fun setData(task: Task){
             binding.txtChar.text=task.title.substring(0,1)
             binding.txtTitle.text=task.title
             binding.txtDescription.text=task.description
+            binding.root.setOnClickListener {
+                onItemClicked(task)
+            }
         }
 
     }

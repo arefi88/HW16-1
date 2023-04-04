@@ -36,6 +36,7 @@ class TaskDialog : DialogFragment() {
     private lateinit var btnTime:Button
     private lateinit var cbDone:CheckBox
     private lateinit var listener:TaskDialogListener
+    private var position=-1
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -84,7 +85,8 @@ class TaskDialog : DialogFragment() {
                     val date=btnDate.text.toString()
                     val time=btnTime.text.toString()
                     val task=Task(title,description,date,time)
-                    findNavController().previousBackStackEntry?.savedStateHandle?.set("task",task)
+                    val taskPosition=TaskPosition(position, task)
+                    findNavController().previousBackStackEntry?.savedStateHandle?.set("task",taskPosition)
                 }
 
 

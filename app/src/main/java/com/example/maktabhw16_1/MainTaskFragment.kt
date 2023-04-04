@@ -36,7 +36,9 @@ class MainTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var taskPosition:TaskPosition
         var task:Task
+        var position:Int
         viewPagerAdapter= ViewPagerAdapter(this)
         binding.viewPager.adapter=viewPagerAdapter
         TabLayoutMediator(binding.tabLayout,binding.viewPager){tab,position->
@@ -45,16 +47,33 @@ class MainTaskFragment : Fragment() {
 
         }.attach()
         binding.fabMain.setOnClickListener {
+            todoViewModel.updatePositionTask(-1)
+            doingViewModel.updatePositionTask(-1)
+            doneViewModel.updatePositionTask(-1)
             findNavController().navigate(MainTaskFragmentDirections.actionMainTaskFragmentToTaskDialog2())
         }
         val currentFragment=findNavController().getBackStackEntry(R.id.mainTaskFragment)
         val dialogObserver = LifecycleEventObserver{_,event->
             if (event == Lifecycle.Event.ON_RESUME && currentFragment.savedStateHandle.contains("task")){
-                task= currentFragment.savedStateHandle["task"]!!
+                taskPosition= currentFragment.savedStateHandle["task"]!!
+
                when(binding.tabLayout.selectedTabPosition){
-                   0->todoViewModel.updateTask(task)
-                   1->doingViewModel.updateTask(task)
-                   2->doneViewModel.updateTask(task)
+                   0->{
+                       todoViewModel.updateTask(taskPosition.task)
+                       todoViewModel.updatePositionTask(taskPosition.position)
+                   }
+
+
+                   1->{
+                       doingViewModel.updateTask(taskPosition.task)
+                       doingViewModel.updatePositionTask(taskPosition.position)
+                   }
+
+                   2->{
+                       doneViewModel.updateTask(taskPosition.task)
+                       doneViewModel.updatePositionTask(taskPosition.position)
+                   }
+
                }
             }
         }
